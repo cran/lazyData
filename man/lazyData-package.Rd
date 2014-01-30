@@ -15,8 +15,8 @@ but do not provide \code{LazyData}.  A single function is is included,
 \tabular{ll}{
 Package: \tab lazyData\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2013-02-24\cr
+Version: \tab 1.0.3\cr
+Date: \tab 2014-01-30\cr
 License: \tab GPL-2\cr
 }
 If a package is attached with \code{requireData}, a check is made to see if a)
@@ -46,13 +46,17 @@ None.
   \code{\link{delayedAssign}}
 }
 \examples{
-mySearch <- function() noquote(as.matrix(search()))
+\dontshow{
+.Search <- function() {
+  srch <- search()
+  srch <- paste(format(srch),
+                ifelse(grepl("^datasets:", srch), "<<-- data here", ""))
+  noquote(as.matrix(srch))
+}
+}
+requireData("mgcv") ## we assume has data sets but no LazyLoad
+.Search()           ## show augmented search path
 
-require("mgcv")  ## we assume has data sets but no LazyLoad
-mySearch()
-
-requireData("mgcv")
-mySearch()
-
-if("datasets:mgcv" \%in\% search()) ls("datasets:mgcv")
+## > ls("datasets:mgcv")
+##[1] "columb"       "columb.polys"
 }

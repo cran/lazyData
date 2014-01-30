@@ -1,5 +1,6 @@
 requireData <- function(package = stop("you must specify a package"),
-                        quietly = TRUE, character.only = FALSE, ...) {
+                        lib.loc = NULL, quietly = TRUE, character.only = FALSE,
+                        warn.conflicts = TRUE, reallyQuietly = TRUE, ...) {
   if(!character.only) {
     pkg <- substitute(package)
     if(!is.character(pkg)) pkg <- deparse(pkg)
@@ -11,11 +12,18 @@ requireData <- function(package = stop("you must specify a package"),
   s0 <- search()
   oldWarn <- options(warn = -1)
   on.exit(options(oldWarn))
-  OK <- base::require(pkg, quietly = quietly, character.only = TRUE, ...)
+  OK <- if(reallyQuietly) {
+    suppressPackageStartupMessages(require(package = pkg, lib.loc = lib.loc,
+                                           quietly = TRUE, warn.conflicts = FALSE,
+                                           character.only = TRUE))
+  } else {
+    require(package = pkg, lib.loc = lib.loc, quietly = quietly,
+            warn.conflicts = warn.conflicts, character.only = TRUE)
+  }
   options(oldWarn)
   if(!OK) {
     warning("no valid package called ", sQuote(pkg), " found")
-    return(invisible(FALSE))  ### packate not installed
+    return(invisible(FALSE))  ### package not installed
   }
 
   ## take care of any extra packages as well

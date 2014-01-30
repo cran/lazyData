@@ -1,5 +1,5 @@
-95fbb9d7140519b105ea884517ef8085 *DESCRIPTION
+ac37f8ab864eaf1183960c539e086543 *DESCRIPTION
 8a7f73e1cbd2b5107f05c06e2f6605db *NAMESPACE
-c1ba8233552f70cc7bbd464edfd46af1 *R/requireData.R
-07c6ffbf35b89903743773379fb6b91d *man/lazyData-package.Rd
-3de74dde9dd6d3e9342c78034d90a122 *man/requireData.Rd
+03d7e6b2c79ca5ba3adc7eeac1895f48 *R/requireData.R
+05ba71438dec42b864b05fc5a242ae2c *man/lazyData-package.Rd
+48eaf73db38fcb32dcda7ac8a7a3aac3 *man/requireData.Rd

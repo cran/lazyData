@@ -10,22 +10,40 @@
 }
 \usage{
 requireData(package = stop("you must specify a package"),
-            quietly = TRUE, character.only = FALSE, ...)
+            lib.loc = NULL, quietly = TRUE, character.only = FALSE,
+            warn.conflicts = TRUE, reallyQuietly = TRUE, ...)
 }
 \arguments{
   \item{package}{
     The name of the package whose attachment to the search path is
     required.  May me a name or a literal character string.
-}
+  }
+  \item{lib.loc}{
+    The path to the library holding the package.  As for
+    \code{\link{require}}.
+  }
   \item{quietly}{
     Logical: should the stanandard loading message be suppressed?
-}
+    Ignored if \code{reallyQuiet} is \code{TRUE}.
+  }
   \item{character.only}{
     Logical: should the \code{package} argument be treated as a
     character string even if not literal?
-}
+  }
+  \item{warn.conflicts}{
+    Should objects masked by the attachment of the package be flagged?
+    As for \code{\link{require}}.
+    Ignored if \code{reallyQuiet} is \code{TRUE}.
+  }
+  \item{reallyQuietly}{
+    Logical: should the \code{package} be loaded using
+    \code{suppressPackageStartupMessages}?  If \code{TRUE}, the default,
+    this will make the loading
+    as quietly as possible, but will suppress potentially useful
+    messages, such as masking information.
+  }
   \item{\dots}{
-    Additional arguments passed on to \code{require}
+    Additional arguments currently ignored.
 }
 }
 \details{
@@ -71,15 +89,19 @@ Bill Venables
   \code{\link{require}}, \code{\link[utils]{data}}
 }
 \examples{
-mySearch <- function() noquote(as.matrix(search()))
+\dontshow{
+.Search <- function() {
+  srch <- search()
+  srch <- paste(format(srch),
+                ifelse(grepl("^datasets:", srch), "<<-- data here", ""))
+  noquote(as.matrix(srch))
+}
+}
+requireData("mgcv") ## we assume has data sets but no LazyLoad
+.Search()           ## show augmented search path
 
-require("mgcv")  ## we assume has data sets but no LazyLoad
-mySearch()
-
-requireData("mgcv")
-mySearch()
-
-if("datasets:mgcv" \%in\% search()) ls("datasets:mgcv")
+## > ls("datasets:mgcv")
+##[1] "columb"       "columb.polys"
 }
 
 \keyword{ data }
