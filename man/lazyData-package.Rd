@@ -15,15 +15,16 @@ but do not provide \code{LazyData}.  A single function is is included,
 \tabular{ll}{
 Package: \tab lazyData\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3\cr
-Date: \tab 2014-01-30\cr
+Version: \tab 1.1.0\cr
+Date: \tab 2016-12-05\cr
 License: \tab GPL-2\cr
 }
 If a package is attached with \code{requireData}, a check is made to see if a)
 the package provides data and b) if the data sets are not made visible to
-the user via \code{LazyData}.  If both are the case, the package is attached to
+the user via \code{LazyData: true}.
+If both are the case, the package is attached to
 the search path, and in addition a second entry to the search path is
-made immediately behind the package containing promises to load the data
+made immediately behind the package containing \code{promises} to load the data
 sets should they be needed.  This keeps data sets out of the
 global environment (unless they are modified), making them visible
 without occupying memory (unless they are needed).
@@ -55,7 +56,7 @@ None.
 }
 }
 requireData("mgcv") ## we assume has data sets but no LazyLoad
-.Search()           ## show augmented search path
+.Search()           ## show the augmented search path
 
 ## > ls("datasets:mgcv")
 ##[1] "columb"       "columb.polys"

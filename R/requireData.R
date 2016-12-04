@@ -6,14 +6,15 @@ requireData <- function(package = stop("you must specify a package"),
     if(!is.character(pkg)) pkg <- deparse(pkg)
   } else pkg <- as.character(package)
 
-  stopifnot(length(pkg) == 1)
+  if(length(pkg) != 1)
+    stop("only one package may be attached in any call")
 
   ## check if the package is on, or can be put on, the search path:
   s0 <- search()
   oldWarn <- options(warn = -1)
   on.exit(options(oldWarn))
   OK <- if(reallyQuietly) {
-    suppressPackageStartupMessages(require(package = pkg, lib.loc = lib.loc,
+    suppressMessages(require(package = pkg, lib.loc = lib.loc,
                                            quietly = TRUE, warn.conflicts = FALSE,
                                            character.only = TRUE))
   } else {
@@ -73,3 +74,4 @@ requireData <- function(package = stop("you must specify a package"),
       }
   invisible(TRUE)
 }
+
